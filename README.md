@@ -240,12 +240,13 @@ Por padrão, `Program.cs` executa apenas `BadPattern.Run()`. Para ver o exemplo 
 composição, descomente a chamada a `CoolPattern.Run()` em `Program.cs`:
 
 ```csharp
+// Entrada da apresentação: antipattern primeiro, pattern depois.
 BadPattern.Run();
-
+/*
 Console.WriteLine();
 Console.WriteLine(new string('=', 60));
 Console.WriteLine();
-
+*/
 CoolPattern.Run(); // <- descomentar
 ```
 
