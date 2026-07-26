@@ -71,6 +71,23 @@ public static class BadPattern
         // E a poupança? Também não deveria ter cartão — mas passou no if.
         // Próximo bug: mais um typeof. Hierarquia podre vira switch de tipos.
 
+        // ---------------------------------------------------------------------------
+        // 5) ContaBolsao — "corrigindo" com override que nega (Refused Bequest)
+        // ---------------------------------------------------------------------------
+        Console.WriteLine();
+        Console.WriteLine("--- 5) ContaBolsao : ContaCorrente (tentativa de correção) ---");
+        var bolsao = new ContaBolsao(saldoInicial: 300m);
+        bolsao.Depositar(100m);
+        bolsao.Debitar(50m);
+        bolsao.PagarComCartao(20m); // negado — mas exigiu OVERRIDE na subclasse
+        Console.WriteLine($"Saldo bolsão: R$ {bolsao.Saldo:F2}");
+
+        Console.WriteLine();
+        Console.WriteLine("Se ContaPoupanca e ContaInvestimento também 'corrigirem' PagarComCartao");
+        Console.WriteLine("assim (cada uma com seu próprio Console.WriteLine), trocar o canal de saída");
+        Console.WriteLine("(ex.: Console.WriteLine -> Objeto.Log) exige editar 3 classes diferentes");
+        Console.WriteLine("para uma única intenção de mudança. Isso é Shotgun Surgery.");
+
         Console.WriteLine();
         Console.WriteLine("Conclusão: herança vazou o método; typeof no foreach é sintoma, não cura.");
         Console.WriteLine("Cada novo tipo 'especial' = mais gambiarra. Veja o CoolPattern.");

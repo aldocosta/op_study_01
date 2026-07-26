@@ -47,6 +47,24 @@ public static class CoolPattern
         }
 
         Console.WriteLine();
+
+        // ---------------------------------------------------------------------------
+        // 5) ContaBolsao — reaproveitando comportamentos já existentes
+        // ---------------------------------------------------------------------------
+        Console.WriteLine("--- 5) ContaBolsao (reaproveita DebitoLiberado + SemCartao) ---");
+        Conta bolsao = new ContaBolsao(saldoInicial: 300m);
+        bolsao.Exibir();
+        bolsao.Depositar(100m);
+        bolsao.RealizarDebito(50m);
+        bolsao.PagarComCartao(20m); // SemCartao — mesma classe usada por poupança/investimento
+        Console.WriteLine($"Saldo: R$ {bolsao.Saldo:F2}");
+
+        Console.WriteLine();
+        Console.WriteLine("Nenhuma classe de comportamento nova, nenhum override para negar.");
+        Console.WriteLine("Trocar o canal de saída (ex.: Console.WriteLine -> Objeto.Log) exige");
+        Console.WriteLine("editar 1 arquivo só: SemCartao.cs. Todo mundo que a usa ganha de graça.");
+        Console.WriteLine();
+
         Console.WriteLine("Conclusão: Conta compõe e delega comportamentos — sem herdar ContaCorrente.");
 
         // =========================================================================
