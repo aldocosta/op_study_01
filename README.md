@@ -268,27 +268,5 @@ Em termos de princípios de design:
 
 ## Referência
 
-Este projeto é baseado no exemplo clássico do **Capítulo 1** do livro **[Head First Design
-Patterns](https://www.oreilly.com/library/view/head-first-design/0596007124/)** (Eric
-Freeman, Elisabeth Robson, Bert Bates e Kathy Sierra — O'Reilly Media), conhecido como
-**SimUDuck**.
-
-No livro, uma classe `Duck` é a superclasse de várias espécies de pato, todas herdando
-`fly()` e `quack()`. O problema aparece quando surgem patos que **não deveriam** voar ou
-grasnar (ex.: um pato de borracha) — exatamente o mesmo tipo de vazamento de comportamento
-que `ContaPoupanca`/`ContaInvestimento`/`ContaBolsao` sofrem ao herdar `ContaCorrente`.
-
-A solução do livro é extrair `FlyBehavior` e `QuackBehavior` como interfaces (Strategy),
-com implementações intercambiáveis (`FlyWithWings`/`FlyNoWay`,
-`Quack`/`Squeak`/`MuteQuack`) compostas dentro de `Duck` — a mesma relação `has-a` que
-`Conta` tem com `IComportamentoDebito`/`IComportamentoCartao` neste repositório. O livro
-também expõe `setFlyBehavior()`/`setQuackBehavior()` para trocar o comportamento em
-runtime — o equivalente aos métodos `SetComportamentoDebito`/`SetComportamentoCartao`
-comentados em `Conta.cs`.
-
-| Head First Design Patterns (SimUDuck) | Este projeto |
-|---|---|
-| `Duck` | `Conta` |
-| `FlyBehavior` / `QuackBehavior` | `IComportamentoDebito` / `IComportamentoCartao` |
-| `FlyNoWay` / `MuteQuack` | `DebitoNegado` / `SemCartao` |
-| `setFlyBehavior()` / `setQuackBehavior()` | `SetComportamentoDebito` / `SetComportamentoCartao` (comentado) |
+Baseado no exemplo do pato (SimUDuck) do livro **Head First Design Patterns** (Eric
+Freeman, Elisabeth Robson, Bert Bates e Kathy Sierra — O'Reilly Media).
