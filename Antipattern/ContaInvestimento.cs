@@ -25,4 +25,5 @@ public class ContaInvestimento : ContaCorrente
         Saldo += rendimento;
         Console.WriteLine($"[{Rotulo}] rendeu R$ {rendimento:F2} — saldo: R$ {Saldo:F2}");
     }
+
 }

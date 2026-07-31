@@ -266,6 +266,28 @@ Em termos de princípios de design:
 - **Liskov Substitution Principle** — se a subclasse precisa "desligar" ou "negar" um método
   herdado para se comportar corretamente, a hierarquia provavelmente está errada.
 
+## Ponto central do nosso exemplo
+
+No cenário das contas deste repositório, o critério para decidir quando um comportamento deve
+virar interface/Strategy é:
+
+> **Identifique o que muda, separe do que permanece estável e encapsule a variação.**
+
+Aplicando ao nosso domínio:
+
+- **Permanece estável**: conta tem saldo e depósito.
+- **Varia por tipo**: débito e pagamento com cartão.
+- **Decisão de design**: débito/cartão viram comportamentos (`IComportamentoDebito`,
+  `IComportamentoCartao`) compostos na `Conta`, e não métodos herdados de `ContaCorrente`.
+
+Checklist prático aplicado às contas:
+
+- Se o mesmo método vive sendo sobrescrito de formas diferentes, ele é candidato a Strategy.
+- Se uma subclasse precisa negar comportamento herdado (`throw`, no-op, mensagem de recusa),
+  a hierarquia está pedindo composição.
+- Se uma regra muda e você precisa editar várias subclasses, a variação está no lugar errado.
+- Se o comportamento pode mudar em runtime, prefira composição com interface a herança fixa.
+
 ## Referência
 
 Baseado no exemplo do pato (SimUDuck) do livro **Head First Design Patterns** (Eric
