@@ -38,8 +38,10 @@ public static class CoolPattern
         Console.WriteLine($"Saldo: R$ {investimento.Saldo:F2}");
         Console.WriteLine();
 
+        Conta bolsao = new ContaBolsao(saldoInicial: 300m);
+
         Console.WriteLine("--- 4) Lote de PagarComCartao (sem typeof) ---");
-        Conta[] contas = [corrente, poupanca, investimento];
+        Conta[] contas = [corrente, poupanca, investimento, bolsao];
         foreach (var conta in contas)
         {
             conta.Exibir();
@@ -48,11 +50,20 @@ public static class CoolPattern
 
         Console.WriteLine();
 
+
+bolsao.SetComportamentoDebito(new DebitoLiberado());
+
+bolsao.Exibir();
+bolsao.Depositar(100m);
+bolsao.RealizarDebito(50m);
+bolsao.PagarComCartao(20m);
+Console.WriteLine($"Saldo: R$ {bolsao.Saldo:F2}");
+Console.WriteLine();
+
         // ---------------------------------------------------------------------------
         // 5) ContaBolsao — reaproveitando comportamentos já existentes
         // ---------------------------------------------------------------------------
         Console.WriteLine("--- 5) ContaBolsao (reaproveita DebitoLiberado + SemCartao) ---");
-        Conta bolsao = new ContaBolsao(saldoInicial: 300m);
         bolsao.Exibir();
         bolsao.Depositar(100m);
         bolsao.RealizarDebito(50m);

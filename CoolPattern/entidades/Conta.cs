@@ -39,8 +39,8 @@ public abstract class Conta
     // =========================================================================
     // MELHORIA (descomentar na apresentação): trocar comportamento em runtime.
     // =========================================================================
-    // public void SetComportamentoDebito(IComportamentoDebito c) => comportamentoDebito = c;
-    // public void SetComportamentoCartao(IComportamentoCartao c) => comportamentoCartao = c;
+     public void SetComportamentoDebito(IComportamentoDebito c) => comportamentoDebito = c;
+     public void SetComportamentoCartao(IComportamentoCartao c) => comportamentoCartao = c;
 
     // Usado pelas strategies para alterar o saldo.
     internal void AplicarSaida(decimal valor)

@@ -22,9 +22,9 @@ public static class BadPattern
         Console.WriteLine();
 
         // ---------------------------------------------------------------------------
-        // 2) ContaPoupanca : ContaCorrente — herança "parece ok"
+        // 2) ContaPoupanca : Conta — herança "parece ok"
         // ---------------------------------------------------------------------------
-        Console.WriteLine("--- 2) ContaPoupanca : ContaCorrente ---");
+        Console.WriteLine("--- 2) ContaPoupanca : Conta ---");
         var poupanca = new ContaPoupanca(saldoInicial: 1_000m);
         poupanca.Depositar(200m);
         poupanca.Debitar(50m);
@@ -36,9 +36,9 @@ public static class BadPattern
         Console.WriteLine();
 
         // ---------------------------------------------------------------------------
-        // 3) ContaInvestimento : ContaCorrente — mesmo erro, óbvio
+        // 3) ContaInvestimento : Conta — mesmo erro, óbvio
         // ---------------------------------------------------------------------------
-        Console.WriteLine("--- 3) ContaInvestimento : ContaCorrente ---");
+        Console.WriteLine("--- 3) ContaInvestimento : Conta ---");
         var investimento = new ContaInvestimento("CDB Liquidez", saldoInicial: 1_000m);
         investimento.Depositar(200m);
         investimento.Render(1.5m);
@@ -52,10 +52,10 @@ public static class BadPattern
         // ---------------------------------------------------------------------------
         // 4) Gambiarra típica: typeof para "proteger" o método errado
         // ---------------------------------------------------------------------------
-        Console.WriteLine("--- 4) Lote de PagarComCartao (investimento NÃO deveria entrar) ---");
-        ContaCorrente[] contas = [corrente, poupanca, investimento];
+        Console.WriteLine("--- 4) Lote de PagarComCartao (poupança e investimento não deveriam entrar) ---");
+        Conta[] contas = [corrente, poupanca, investimento];
 
-        // A API diz que todas são ContaCorrente → todas "podem" pagar com cartão.
+        // A API diz que todas são Conta → todas "podem" pagar com cartão.
         // Sem design certo, o time inventa filtro por tipo:
         foreach (var conta in contas)
         {
@@ -68,14 +68,14 @@ public static class BadPattern
             conta.PagarComCartao(10m);
         }
 
-        // E a poupança? Também não deveria ter cartão — mas passou no if.
+        // A poupança também não deveria ter cartão — mas passou no if.
         // Próximo bug: mais um typeof. Hierarquia podre vira switch de tipos.
 
         // ---------------------------------------------------------------------------
         // 5) ContaBolsao — "corrigindo" com override que nega (Refused Bequest)
         // ---------------------------------------------------------------------------
         Console.WriteLine();
-        Console.WriteLine("--- 5) ContaBolsao : ContaCorrente (tentativa de correção) ---");
+        Console.WriteLine("--- 5) ContaBolsao : Conta (tentativa de correção) ---");
         var bolsao = new ContaBolsao(saldoInicial: 300m);
         bolsao.Depositar(100m);
         bolsao.Debitar(50m);

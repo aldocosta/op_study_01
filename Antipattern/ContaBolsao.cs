@@ -8,7 +8,7 @@ namespace ApresentacaoDotNet.Antipattern;
 /// trocar o canal de saída (ex.: Console.WriteLine -> Objeto.Log) vira
 /// Shotgun Surgery: uma intenção de mudança, N classes para editar.
 /// </summary>
-public class ContaBolsao : ContaCorrente
+public class ContaBolsao : Conta
 {
     public ContaBolsao(decimal saldoInicial = 0) : base(saldoInicial) { }
 

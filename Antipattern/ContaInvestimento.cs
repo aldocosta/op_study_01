@@ -1,11 +1,11 @@
 namespace ApresentacaoDotNet.Antipattern;
 
 /// <summary>
-/// Mesma decisão da poupança: herdar ContaCorrente para reusar saldo.
+/// Está no mesmo nível da corrente (filha de Conta).
 /// FALHA gritante: Debitar e PagarComCartao existem e funcionam.
-/// Pior: ContaInvestimento É ContaCorrente para o compilador (LSP mentindo).
+/// Pior: a classe base expôs capacidades que investimento não deveria ter.
 /// </summary>
-public class ContaInvestimento : ContaCorrente
+public class ContaInvestimento : Conta
 {
     public string Produto { get; }
 

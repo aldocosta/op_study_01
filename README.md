@@ -24,19 +24,20 @@ Existem três tipos de conta:
 
 ## ❌ `Antipattern` / `BadPattern.cs` — herança forçando comportamento errado
 
-`ContaPoupanca` e `ContaInvestimento` **herdam** de `ContaCorrente` só para reaproveitar
-saldo, depósito e débito:
+`ContaCorrente`, `ContaPoupanca` e `ContaInvestimento` **herdam** de `Conta`:
 
 ```csharp
-public class ContaInvestimento : ContaCorrente
+public class ContaInvestimento : Conta
 ```
 
-O problema: `PagarComCartao` (e, no caso do investimento, também `Debitar`) são
-comportamentos **específicos de conta corrente**, mas como são `public virtual` na
-superclasse, **qualquer herdeiro os ganha de graça** — mesmo quando isso viola a regra de
-negócio.
+> Neste exemplo, a classe base `Conta` expõe capacidades que não são universais. Isso é
+> intencional para demonstrar o problema de modelagem.
 
-Para o compilador, `ContaInvestimento` **é** uma `ContaCorrente` (relação `is-a`), então o
+O problema: `PagarComCartao` (e, no caso do investimento, também `Debitar`) não são
+comportamentos universais, mas como são `public virtual` na superclasse `Conta`, **qualquer
+herdeiro os ganha de graça** — mesmo quando isso viola a regra de negócio.
+
+Para o compilador, `ContaInvestimento` **é** uma `Conta` que possui esses métodos, então o
 código passa a aceitar chamadas que não deveriam existir:
 
 ```csharp
@@ -152,7 +153,7 @@ Em `Antipattern/ContaBolsao.cs`, para "corrigir" o vazamento de `PagarComCartao`
 saída é **sobrescrever o método herdado só para recusá-lo**:
 
 ```csharp
-public class ContaBolsao : ContaCorrente
+public class ContaBolsao : Conta
 {
     public override void PagarComCartao(decimal valor) =>
         Console.WriteLine($"[{Rotulo}] Conta Bolsão não faz pagamento de cartão");
@@ -203,10 +204,11 @@ graça, sem tocar em nenhuma delas.
 ```
 .
 ├── Antipattern/                     # Exemplo ❌ com herança "para reusar"
-│   ├── ContaCorrente.cs
-│   ├── ContaPoupanca.cs             # : ContaCorrente
-│   ├── ContaInvestimento.cs         # : ContaCorrente
-│   └── ContaBolsao.cs               # : ContaCorrente — Refused Bequest
+│   ├── Conta.cs                     # Base com comportamento que não é universal (erro intencional)
+│   ├── ContaCorrente.cs             # : Conta
+│   ├── ContaPoupanca.cs             # : Conta
+│   ├── ContaInvestimento.cs         # : Conta
+│   └── ContaBolsao.cs               # : Conta — Refused Bequest
 ├── BadPattern.cs                    # Demo do antipattern
 │
 ├── CoolPattern/                     # Exemplo ✅ com composição (Strategy)
@@ -287,6 +289,9 @@ Checklist prático aplicado às contas:
   a hierarquia está pedindo composição.
 - Se uma regra muda e você precisa editar várias subclasses, a variação está no lugar errado.
 - Se o comportamento pode mudar em runtime, prefira composição com interface a herança fixa.
+
+Em uma frase: **`Conta` deve ser a base comum; `ContaCorrente` é uma especialização no mesmo
+nível de `ContaPoupanca`, `ContaInvestimento` e `ContaBolsao`.**
 
 ## Referência
 

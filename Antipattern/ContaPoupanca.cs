@@ -1,11 +1,11 @@
 namespace ApresentacaoDotNet.Antipattern;
 
 /// <summary>
-/// Herda ContaCorrente só para reusar saldo/depósito/saque.
+/// Está no mesmo nível da corrente (filha de Conta).
 /// GANHO aparente: menos código.
 /// FALHA: PagarComCartao vem junto e executa de verdade.
 /// </summary>
-public class ContaPoupanca : ContaCorrente
+public class ContaPoupanca : Conta
 {
     public ContaPoupanca(decimal saldoInicial = 0) : base(saldoInicial) { }
 
